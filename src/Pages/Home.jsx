@@ -10,6 +10,7 @@ import {
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import lottie from "../assets/NLbpVqGegK.lottie";
 
 // Memoized Components
 const StatusBadge = memo(() => (
@@ -161,7 +162,7 @@ const Home = () => {
 
   // Lottie configuration
   const lottieOptions = {
-    src: "NLbpVqGegK.lottie",
+    src: lottie,
     loop: true,
     autoplay: true,
     rendererSettings: {
