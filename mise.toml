@@ -1,0 +1,61 @@
+[tools]
+bun = "latest"
+lefthook = "latest"
+oxfmt = "latest"
+oxlint = "latest"
+
+[settings]
+jobs = 4
+
+[tasks.install]
+description = "Install dependencies with Bun"
+sources = ["package.json", "bun.lock"]
+outputs = ["node_modules"]
+run = "bun install --frozen-lockfile"
+alias = ["i"]
+
+[tasks.dev]
+description = "Start the Vite development server"
+run = "bun run dev"
+alias = ["d"]
+
+[tasks.build]
+description = "Build the Vite application"
+sources = [
+  "src/**",
+  "public/**",
+  "index.html",
+  "package.json",
+  "bun.lock",
+  "tsconfig.json",
+  "tailwind.config.ts",
+  "vite.config.ts",
+]
+outputs = ["dist/index.html"]
+run = "bun run build"
+alias = ["b"]
+
+[tasks.start]
+description = "Preview the production Vite build"
+run = "bun run preview"
+alias = ["s"]
+
+[tasks.lint]
+description = "Lint the project with Oxlint"
+run = "oxlint ."
+alias = ["l"]
+
+[tasks.format]
+description = "Format the project with Oxfmt"
+run = "oxfmt --write ."
+alias = ["f"]
+
+[tasks.typecheck]
+description = "Run TypeScript without emitting files"
+run = "bunx tsc --noEmit"
+alias = ["t", "tc"]
+
+[tasks.check]
+description = "Run all validation checks"
+depends = ["lint", "typecheck", "build"]
+alias = ["c"]
