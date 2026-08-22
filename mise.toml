@@ -15,8 +15,8 @@ run = "bun install --frozen-lockfile"
 alias = ["i"]
 
 [tasks.dev]
-description = "Start the Vite development server"
-run = "bun run dev"
+description = "Start the Vite development server (Bun runtime)"
+run = "bunx vite"
 alias = ["d"]
 
 [tasks.build]
@@ -32,12 +32,12 @@ sources = [
   "vite.config.ts",
 ]
 outputs = ["dist/index.html"]
-run = "bun run build"
+run = "bunx vite build"
 alias = ["b"]
 
 [tasks.start]
-description = "Preview the production Vite build"
-run = "bun run preview"
+description = "Preview the production Vite build (Bun runtime)"
+run = "bunx vite preview"
 alias = ["s"]
 
 [tasks.lint]
@@ -51,7 +51,7 @@ run = "oxfmt --write ."
 alias = ["f"]
 
 [tasks.typecheck]
-description = "Run TypeScript without emitting files"
+description = "Run the native TypeScript 7 compiler (tsc) without emitting files"
 run = "bunx tsc --noEmit"
 alias = ["t", "tc"]
 

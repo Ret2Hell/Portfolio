@@ -11,6 +11,8 @@ This repository uses [mise](https://mise.jdx.dev/) to pin the project tools:
 - Oxfmt
 - Oxlint
 
+All project commands (dev server, build, preview, typecheck) run on the **Bun runtime** through `bunx`. `package.json` keeps the standard `dev`, `build`, and `preview` scripts; linting, formatting, and type checking live in mise. Type checking uses **TypeScript 7** (`typescript@^7`), whose `tsc` binary is the native Go compiler.
+
 Trust the project configuration and install the tools:
 
 ```bash
@@ -27,16 +29,16 @@ mise run dev
 
 ## Commands
 
-| Command              | Alias    | Description                       |
-| -------------------- | -------- | --------------------------------- |
-| `mise run install`   | `mise i` | Install dependencies with Bun     |
-| `mise run dev`       | `mise d` | Start the Vite development server |
-| `mise run build`     | `mise b` | Build the production application  |
-| `mise run start`     | `mise s` | Preview the production build      |
-| `mise run lint`      | `mise l` | Lint with Oxlint                  |
-| `mise run format`    | `mise f` | Format with Oxfmt                 |
-| `mise run typecheck` | `mise t` | Run TypeScript checks             |
-| `mise run check`     | `mise c` | Run lint, typecheck, and build    |
+| Command              | Alias    | Description                             |
+| -------------------- | -------- | --------------------------------------- |
+| `mise run install`   | `mise i` | Install dependencies with Bun           |
+| `mise run dev`       | `mise d` | Start the Vite dev server (Bun runtime) |
+| `mise run build`     | `mise b` | Build the production application (Bun)  |
+| `mise run start`     | `mise s` | Preview the production build (Bun)      |
+| `mise run lint`      | `mise l` | Lint with Oxlint                        |
+| `mise run format`    | `mise f` | Format with Oxfmt                       |
+| `mise run typecheck` | `mise t` | Type check with TypeScript 7 (`tsc`)    |
+| `mise run check`     | `mise c` | Run lint, typecheck, and build          |
 
 Lefthook runs Oxlint and an Oxfmt check against staged files before each commit.
 
