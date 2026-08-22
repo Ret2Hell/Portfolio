@@ -9,8 +9,6 @@ jobs = 4
 
 [tasks.install]
 description = "Install dependencies with Bun"
-sources = ["package.json", "bun.lock"]
-outputs = ["node_modules"]
 run = "bun install --frozen-lockfile"
 alias = ["i"]
 
@@ -21,17 +19,6 @@ alias = ["d"]
 
 [tasks.build]
 description = "Build the Vite application"
-sources = [
-  "src/**",
-  "public/**",
-  "index.html",
-  "package.json",
-  "bun.lock",
-  "tsconfig.json",
-  "tailwind.config.ts",
-  "vite.config.ts",
-]
-outputs = ["dist/index.html"]
 run = "bunx vite build"
 alias = ["b"]
 
