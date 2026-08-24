@@ -1,4 +1,5 @@
 import type { ProjectData } from "../constants";
+import { responsiveImage } from "../utils/responsiveImage";
 
 interface ProjectProps {
   project: ProjectData;
@@ -30,7 +31,14 @@ const Project = ({ project, onOpen }: ProjectProps) => {
     <article className="project-card">
       <button className="project-card-open" onClick={onOpen} aria-label={`View ${title} details`}>
         <div className="project-cover">
-          <img src={image} alt={`${title} preview`} loading="lazy" decoding="async" />
+          <img
+            src={image}
+            {...responsiveImage(image)}
+            sizes="(min-width: 1280px) 608px, (min-width: 768px) 48vw, 100vw"
+            alt={`${title} preview`}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </button>
 

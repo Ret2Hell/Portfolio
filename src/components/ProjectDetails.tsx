@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import type { ProjectData } from "../constants";
 import ShowcaseModal from "./ShowcaseModal";
+import { responsiveImage } from "../utils/responsiveImage";
 
 interface ExternalLinkProps {
   href?: string;
@@ -40,6 +41,8 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
           <div className="project-gallery-main">
             <img
               src={images[activeImage]}
+              {...responsiveImage(images[activeImage])}
+              sizes="(min-width: 1024px) 60vw, 94vw"
               alt={`${project.title} view ${activeImage + 1}`}
               decoding="async"
             />
@@ -80,7 +83,14 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
                   onClick={() => setActiveImage(index)}
                   aria-label={`Show image ${index + 1}`}
                 >
-                  <img src={image} alt="" loading="lazy" decoding="async" />
+                  <img
+                    src={image}
+                    {...responsiveImage(image)}
+                    sizes="96px"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </button>
               ))}
             </div>

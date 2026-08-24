@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence } from "motion/react";
 import type { CertificateData } from "../constants";
 import ShowcaseModal from "./ShowcaseModal";
+import { responsiveImage } from "../utils/responsiveImage";
 
 interface CertificatePreviewProps {
   certificate: CertificateData;
@@ -13,7 +14,18 @@ const CertificatePreview = ({ certificate, full = false }: CertificatePreviewPro
 
   if (image) {
     return (
-      <img src={image} alt={`${title}, issued by ${issuer}`} loading={full ? "eager" : "lazy"} />
+      <img
+        src={image}
+        {...responsiveImage(image)}
+        sizes={
+          full
+            ? "(min-width: 1024px) 60vw, 94vw"
+            : "(min-width: 1280px) 608px, (min-width: 768px) 48vw, 100vw"
+        }
+        alt={`${title}, issued by ${issuer}`}
+        loading={full ? "eager" : "lazy"}
+        decoding="async"
+      />
     );
   }
 
