@@ -177,8 +177,8 @@ export const myProjects: ProjectData[] = [
       "/assets/projects/oterax/16.webp",
     ],
     tags: [
-      { id: 1, name: "Next.js 16", path: "/assets/logos/nextjs.svg" },
-      { id: 2, name: "React 19", path: "/assets/logos/react.svg" },
+      { id: 1, name: "Next.js", path: "/assets/logos/nextjs.svg" },
+      { id: 2, name: "React", path: "/assets/logos/react.svg" },
       { id: 3, name: "TypeScript", path: "/assets/logos/typescript.svg" },
       { id: 4, name: "Supabase", path: "/assets/logos/supabase.svg" },
       { id: 5, name: "Flask", path: "/assets/logos/flask.svg" },
