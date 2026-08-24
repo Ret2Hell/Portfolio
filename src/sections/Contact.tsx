@@ -1,7 +1,8 @@
 import type { ChangeEvent, FormEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Alert from "../components/Alert";
 import { Particles } from "../components/Particles";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,6 +13,18 @@ const Contact = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState<"success" | "danger">("success");
   const [alertMessage, setAlertMessage] = useState("");
+
+  useEffect(() => {
+    // Web3Forms' client script renders the hCaptcha widget into every
+    // element with [data-captcha="true"]. No hCaptcha account needed.
+    if (!document.querySelector('script[src*="web3forms.com/client"]')) {
+      const script = document.createElement("script");
+      script.src = "https://web3forms.com/client/script.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,28 +39,29 @@ const Contact = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    // Capture the form element before awaiting — React nulls
+    // event.currentTarget after the handler yields.
+    const form = e.currentTarget;
 
     try {
-      const { default: emailjs } = await import("@emailjs/browser");
-      await emailjs.send(
-        "service_79b0nyj",
-        "template_17us8im",
-        {
-          from_name: formData.name,
-          to_name: "Yassine",
-          from_email: formData.email,
-          to_email: "mohamedyassine.taieb@insat.ucar.tn",
-          message: formData.message,
-        },
-        "pn-Bw_mS1_QQdofuV"
-      );
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        body: new FormData(form),
+      });
+      const data = await response.json();
+      if (!data.success) throw new Error(data.message || "Submission failed");
+
       setIsLoading(false);
-      setFormData({ name: "", email: "", message: "" });
+      form.reset();
       showAlertMessage("success", "Your message has been sent!");
     } catch (error) {
       setIsLoading(false);
       console.log(error);
-      showAlertMessage("danger", "Something went wrong.");
+      const message =
+        error instanceof Error && error.message !== "Failed to fetch"
+          ? error.message
+          : "Something went wrong. Please try again later.";
+      showAlertMessage("danger", message);
     }
   };
   return (
@@ -69,6 +83,23 @@ const Contact = () => {
           </p>
         </div>
         <form className="w-full" onSubmit={handleSubmit}>
+          {/* --- Web3Forms config (hidden fields) --- */}
+          <input
+            type="hidden"
+            name="access_key"
+            value={import.meta.env.VITE_WEB3FORMS_ACCESS_KEY}
+          />
+          <input type="hidden" name="subject" value="New message from your portfolio website" />
+          <input type="hidden" name="from_name" value="Portfolio Website" />
+          {/* Auto-reply sent to whoever submits the form */}
+          <input
+            type="hidden"
+            name="autoresponse"
+            value="Hi! Thanks for reaching out — I received your message and will get back to you soon."
+          />
+          {/* Honeypot spam trap: hidden from humans, bots fill it and get silently dropped */}
+          <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+
           <div className="mb-5">
             <label htmlFor="name" className="field-label">
               Full Name
@@ -117,6 +148,12 @@ const Contact = () => {
               required
             />
           </div>
+
+          {/* hCaptcha widget rendered by web3forms.com/client/script.js */}
+          <div className="mb-5 flex justify-center">
+            <div className="h-captcha" data-captcha="true" data-theme="dark" />
+          </div>
+
           <button
             type="submit"
             className="w-full px-1 py-3 text-lg text-center rounded-md cursor-pointer bg-radial from-lavender to-royal hover-animation"
