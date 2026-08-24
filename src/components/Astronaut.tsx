@@ -35,7 +35,7 @@ type AstronautProps = ThreeElements["group"];
 export function Astronaut(props: AstronautProps) {
   const group = useRef<Group>(null);
   const { nodes, materials, animations } = useGLTF(
-    "/models/tenhun_falling_spaceman_fanart.glb"
+    "/models/astronaut.glb"
   ) as unknown as AstronautModel;
   const { actions } = useAnimations(animations, group);
 
@@ -148,5 +148,3 @@ export function Astronaut(props: AstronautProps) {
     </group>
   );
 }
-
-useGLTF.preload("/models/tenhun_falling_spaceman_fanart.glb");

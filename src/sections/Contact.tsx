@@ -1,6 +1,5 @@
 import type { ChangeEvent, FormEvent } from "react";
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import Alert from "../components/Alert";
 import { Particles } from "../components/Particles";
 const Contact = () => {
@@ -29,6 +28,7 @@ const Contact = () => {
     setIsLoading(true);
 
     try {
+      const { default: emailjs } = await import("@emailjs/browser");
       await emailjs.send(
         "service_79b0nyj",
         "template_17us8im",

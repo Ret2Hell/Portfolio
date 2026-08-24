@@ -79,6 +79,8 @@ section[id],
 
 .section-spacing {
   @apply min-h-screen mt-20 md:mt-30;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 .text-heading {

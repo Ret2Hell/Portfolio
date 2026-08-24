@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Particle {
@@ -24,27 +24,6 @@ interface ParticlesProps extends HTMLAttributes<HTMLDivElement> {
   color?: string;
   vx?: number;
   vy?: number;
-}
-
-function MousePosition() {
-  const [mousePosition, setMousePosition] = useState({
-    x: 0,
-    y: 0,
-  });
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  return mousePosition;
 }
 
 function hexToRgb(hex: string): [number, number, number] {
@@ -80,8 +59,8 @@ export const Particles = ({
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const circles = useRef<Particle[]>([]);
-  const mousePosition = MousePosition();
   const mouse = useRef({ x: 0, y: 0 });
+  const isVisible = useRef(false);
   const canvasSize = useRef({ w: 0, h: 0 });
   const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
   const rafID = useRef<number | null>(null);
@@ -92,7 +71,24 @@ export const Particles = ({
       context.current = canvasRef.current.getContext("2d");
     }
     initCanvas();
-    animate();
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion) animate();
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible.current = entry.isIntersecting;
+      },
+      { rootMargin: "200px" }
+    );
+    if (canvasContainerRef.current) observer.observe(canvasContainerRef.current);
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!isVisible.current || !canvasRef.current) return;
+      const rect = canvasRef.current.getBoundingClientRect();
+      mouse.current.x = event.clientX - rect.left - canvasSize.current.w / 2;
+      mouse.current.y = event.clientY - rect.top - canvasSize.current.h / 2;
+    };
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     const handleResize = () => {
       if (resizeTimeout.current) {
@@ -112,16 +108,13 @@ export const Particles = ({
       if (resizeTimeout.current) {
         clearTimeout(resizeTimeout.current);
       }
+      observer.disconnect();
+      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
     };
     // The animation lifecycle is intentionally restarted only when its color changes.
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [color]);
-
-  useEffect(() => {
-    onMouseMove();
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
-  }, [mousePosition.x, mousePosition.y]);
 
   useEffect(() => {
     initCanvas();
@@ -130,21 +123,6 @@ export const Particles = ({
 
   const initCanvas = () => {
     resizeCanvas();
-    drawParticles();
-  };
-
-  const onMouseMove = () => {
-    if (canvasRef.current) {
-      const rect = canvasRef.current.getBoundingClientRect();
-      const { w, h } = canvasSize.current;
-      const x = mousePosition.x - rect.left - w / 2;
-      const y = mousePosition.y - rect.top - h / 2;
-      const inside = x < w / 2 && x > -w / 2 && y < h / 2 && y > -h / 2;
-      if (inside) {
-        mouse.current.x = x;
-        mouse.current.y = y;
-      }
-    }
   };
 
   const resizeCanvas = () => {
@@ -216,15 +194,6 @@ export const Particles = ({
     }
   };
 
-  const drawParticles = () => {
-    clearContext();
-    const particleCount = quantity;
-    for (let i = 0; i < particleCount; i++) {
-      const circle = circleParams();
-      drawCircle(circle);
-    }
-  };
-
   const remapValue = (
     value: number,
     start1: number,
@@ -237,6 +206,10 @@ export const Particles = ({
   };
 
   const animate = () => {
+    if (!isVisible.current || document.hidden) {
+      rafID.current = window.requestAnimationFrame(animate);
+      return;
+    }
     clearContext();
     circles.current.forEach((circle, i) => {
       // Handle the alpha value

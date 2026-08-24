@@ -1,15 +1,29 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { lazy, Suspense, useEffect, useState } from "react";
 import HeroText from "../components/HeroText";
 import ParallaxBackground from "../components/parallaxBackground";
-import { Astronaut } from "../components/Astronaut";
-import { Float } from "@react-three/drei";
-import { useMediaQuery } from "react-responsive";
-import { easing } from "maath";
-import { Suspense } from "react";
-import Loader from "../components/Loader";
+
+const HeroScene = lazy(() => import("../components/HeroScene"));
 
 const Hero = () => {
-  const isMobile = useMediaQuery({ maxWidth: 853 });
+  const [showScene, setShowScene] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const idleWindow = window as typeof window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    const id = idleWindow.requestIdleCallback
+      ? idleWindow.requestIdleCallback(() => setShowScene(true), { timeout: 1500 })
+      : window.setTimeout(() => setShowScene(true), 500);
+
+    return () => {
+      if (idleWindow.cancelIdleCallback) idleWindow.cancelIdleCallback(id);
+      else window.clearTimeout(id);
+    };
+  }, []);
+
   return (
     <section
       id="home"
@@ -17,32 +31,13 @@ const Hero = () => {
     >
       <HeroText />
       <ParallaxBackground />
-      <figure className="absolute inset-0" style={{ width: "100vw", height: "100vh" }}>
-        <Canvas camera={{ position: [0, 1, 3] }}>
-          <Suspense fallback={<Loader />}>
-            <Float>
-              <Astronaut
-                scale={isMobile ? 0.23 : 0.3}
-                position={isMobile ? [0, -1.5, 0] : [1.3, -1, 0]}
-              />
-            </Float>
-            <Rig />
-          </Suspense>
-        </Canvas>
-      </figure>
+      {showScene && (
+        <Suspense fallback={null}>
+          <HeroScene />
+        </Suspense>
+      )}
     </section>
   );
 };
-
-function Rig() {
-  return useFrame((state, delta) => {
-    easing.damp3(
-      state.camera.position,
-      [state.mouse.x / 10, 1 + state.mouse.y / 10, 3],
-      0.5,
-      delta
-    );
-  });
-}
 
 export default Hero;

@@ -23,9 +23,13 @@ const About = () => {
         {/* Grid 1 */}
         <div className="flex items-end grid-default-color grid-1">
           <img
-            src="assets/coding-pov.png"
+            src="/assets/coding-pov.webp"
             className="absolute scale-[1.75] -right-[5rem] -top-[1rem] md:scale-[3] md:left-50 md:inset-y-10 lg:scale-[2.5]"
             alt="Code editor showing a software project"
+            width="1328"
+            height="813"
+            loading="lazy"
+            decoding="async"
           />
           <div className="z-10">
             <p className="headtext">Hi, I'm Taieb Mohamed Yassine</p>
