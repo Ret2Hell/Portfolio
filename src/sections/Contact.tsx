@@ -91,12 +91,6 @@ const Contact = () => {
           />
           <input type="hidden" name="subject" value="New message from your portfolio website" />
           <input type="hidden" name="from_name" value="Portfolio Website" />
-          {/* Auto-reply sent to whoever submits the form */}
-          <input
-            type="hidden"
-            name="autoresponse"
-            value="Hi! Thanks for reaching out — I received your message and will get back to you soon."
-          />
           {/* Honeypot spam trap: hidden from humans, bots fill it and get silently dropped */}
           <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
 
