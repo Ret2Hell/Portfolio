@@ -6,13 +6,14 @@ Each project has its own folder:
 projects/
 ├── oterax/
 ├── i18n-mcp/
+├── jiratui/
 ├── tanilytics/
 └── e-sihha/
 ```
 
 ## Replacing the card image
 
-Replace `cover.jpg` in the project folder. Keeping the same filename means no code change is needed.
+Replace the configured cover image in the project folder. Keeping the same filename means no code change is needed.
 
 ## Adding modal gallery images
 
@@ -33,4 +34,4 @@ Replace `cover.jpg` in the project folder. Keeping the same filename means no co
    ],
    ```
 
-JPG, PNG, and WebP files are supported.
+JPG, PNG, WebP, and SVG files are supported.

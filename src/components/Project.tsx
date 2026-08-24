@@ -20,8 +20,9 @@ const ExternalIcon = () => (
 const Project = ({ project, onOpen }: ProjectProps) => {
   const { title, description, image, tags } = project;
   const website = project.liveDemo || project.href;
-  const externalLink = website || project.repository;
-  const externalLabel = website ? "Visit website" : "View source";
+  const showRepository = project.cardLink === "repository" && project.repository;
+  const externalLink = showRepository ? project.repository : website || project.repository;
+  const externalLabel = showRepository || !website ? "View source" : "Visit website";
   const visibleTags = tags.slice(0, 6);
   const remainingTags = tags.length - visibleTags.length;
 
