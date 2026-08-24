@@ -25,7 +25,7 @@ export const Timeline = ({ data }: { data: ExperienceData[] }) => {
 
   return (
     <div className="c-space mt-2 md:mt-4" ref={containerRef}>
-      <h2 className="text-heading">My Work Experience</h2>
+      <h2 className="text-heading">Professional Experience</h2>
       <div ref={ref} className="relative pb-20">
         {data.map((item, index) => (
           <div key={index} className="flex justify-start pt-4 md:gap-10">

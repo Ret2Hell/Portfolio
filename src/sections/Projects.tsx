@@ -16,9 +16,9 @@ const Projects = () => {
   const [activeProject, setActiveProject] = useState<ProjectData | null>(null);
 
   return (
-    <section id="work" className="work-showcase c-space section-spacing">
+    <section id="projects" className="work-showcase c-space section-spacing">
       <div className="showcase-heading">
-        <h2 className="text-heading">My Work</h2>
+        <h2 className="text-heading">Projects &amp; Certifications</h2>
         <p className="subtext">
           A selection of projects I&apos;ve built and certifications I&apos;ve earned.
         </p>
