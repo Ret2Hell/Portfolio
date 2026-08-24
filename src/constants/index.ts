@@ -32,7 +32,9 @@ export interface ProjectData {
 
 export interface ExperienceData {
   title: string;
-  job: string;
+  company: string;
+  companyUrl: string;
+  location?: string;
   date: string;
   contents: string[];
 }
@@ -364,7 +366,9 @@ export const mySocials: SocialData[] = [
 export const experiences: ExperienceData[] = [
   {
     title: "Software Engineer",
-    job: "RaiseLabs · Remote",
+    company: "RaiseLabs",
+    companyUrl: "https://www.linkedin.com/company/raiselabs-ai/",
+    location: "Remote",
     date: "Nov 2025 – Present",
     contents: [
       "Build AI-powered features for TeachingHero, including an AI assistant and agentic workflows that automate course generation and content creation.",
@@ -374,7 +378,8 @@ export const experiences: ExperienceData[] = [
   },
   {
     title: "Software Engineer Intern",
-    job: "TAHO AI",
+    company: "TAHO AI",
+    companyUrl: "https://www.linkedin.com/company/taho-ai/",
     date: "Jun 2025 – Jul 2025",
     contents: [
       "Designed a RabbitMQ transport layer using an RPC pattern for efficient inter-service communication.",
@@ -384,7 +389,8 @@ export const experiences: ExperienceData[] = [
   },
   {
     title: "Full-Stack Developer",
-    job: "Digital Bundle",
+    company: "Digital Bundle",
+    companyUrl: "https://www.linkedin.com/company/digitalbundletn/",
     date: "Aug 2024 – Nov 2024",
     contents: [
       "Built responsive Vue.js and Tailwind CSS interfaces for Levii, an ERP platform that streamlines core business operations.",
