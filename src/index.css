@@ -236,6 +236,31 @@ body {
   width: 100%;
   color: white;
   text-align: left;
+}
+.project-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1rem;
+  background: rgba(13, 16, 38, 0.58);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+.project-card:hover {
+  border-color: rgba(122, 87, 219, 0.42);
+  background: rgba(17, 20, 45, 0.78);
+  transform: translateY(-2px);
+}
+.project-card-open {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+.certificate-card {
   cursor: pointer;
 }
 .project-cover,
@@ -251,7 +276,11 @@ body {
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-.project-card:hover .project-cover,
+.project-card .project-cover {
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+}
 .certificate-card:hover .certificate-frame {
   transform: translateY(-3px);
   border-color: rgba(122, 87, 219, 0.55);
@@ -281,12 +310,14 @@ body {
 .certificate-card:hover .certificate-frame::after {
   opacity: 1;
 }
-.project-open,
 .certificate-view {
   position: absolute;
   right: 0.8rem;
   bottom: 0.8rem;
   z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   padding: 0.45rem 0.7rem;
   border-radius: 0.45rem;
   background: rgba(6, 9, 31, 0.9);
@@ -295,66 +326,114 @@ body {
   transform: translateY(5px);
   transition: 0.2s ease;
 }
-.project-card:hover .project-open,
 .certificate-card:hover .certificate-view {
   opacity: 1;
   transform: translateY(0);
 }
 
 .project-card-copy {
-  padding: 1rem 0.15rem 0.65rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.15rem;
 }
 .project-card-title {
   display: flex;
+  width: 100%;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  color: white;
+  text-align: left;
+  cursor: pointer;
 }
 .project-card-title h3 {
-  font-size: 1.12rem;
-  font-weight: 500;
+  font-size: 1.15rem;
+  font-weight: 550;
   transition: color 0.2s;
 }
-.project-card-title > span {
-  color: #7a57db;
-  opacity: 0;
-  transform: translate(-4px, 4px);
-  transition: 0.2s ease;
-}
-.project-card:hover .project-card-title h3 {
-  color: #b7a6ea;
-}
-.project-card:hover .project-card-title > span {
-  opacity: 1;
-  transform: translate(0);
-}
-.project-date {
-  display: block;
-  margin-top: 0.28rem;
-  color: #686a79;
-  font-size: 0.68rem;
+.project-card-title:hover h3 {
+  color: #c7b9ef;
 }
 .project-card-copy > p {
   max-width: 34rem;
-  margin-top: 0.55rem;
+  margin-top: 0.6rem;
   color: #858795;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 .project-tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.8rem;
+  gap: 0.4rem;
+  margin-top: 1rem;
 }
 .project-tags span {
-  color: #a3a3a3;
-  font-size: 0.68rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.48rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.4rem;
+  background: rgba(3, 4, 18, 0.28);
+  color: #b5b6bf;
+  font-size: 0.65rem;
+  line-height: 1;
 }
-.project-tags span + span::before {
-  content: "·";
-  margin-right: 0.5rem;
-  color: #5b5d6d;
+.project-tags img {
+  width: 0.85rem;
+  height: 0.85rem;
+  object-fit: contain;
+}
+.project-tags .project-tags-more {
+  color: #9d83e7;
+}
+.project-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+.project-details-action,
+.project-website {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+}
+.project-details-action {
+  color: #8f919e;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.project-details-action:hover {
+  color: white;
+}
+.project-website {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 0.45rem;
+  background: rgba(255, 255, 255, 0.035);
+  color: #d8d8df;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.project-website:hover {
+  border-color: rgba(122, 87, 219, 0.65);
+  background: rgba(122, 87, 219, 0.1);
+}
+.project-details-action svg,
+.project-website svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .certificate-grid {
@@ -507,26 +586,81 @@ body {
 .showcase-close:hover {
   background: #282b4b;
 }
+.project-dialog .showcase-close {
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 2rem;
+  height: 2rem;
+  border-color: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(3, 4, 18, 0.42);
+  font-size: 1rem;
+  opacity: 0.68;
+  backdrop-filter: blur(8px);
+}
+.project-dialog .showcase-close:hover,
+.project-dialog .showcase-close:focus-visible {
+  background: rgba(3, 4, 18, 0.78);
+  opacity: 1;
+}
 
+.showcase-dialog.project-dialog {
+  width: min(1180px, 100%);
+}
 .project-modal-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
+  display: block;
 }
 .project-gallery {
-  padding: 0.75rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .project-gallery-main {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 4/3;
-  border-radius: 0.7rem;
   background: #030412;
 }
 .project-gallery-main > img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+}
+.project-gallery-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(3, 4, 18, 0.48);
+  color: white;
+  opacity: 0.72;
+  cursor: pointer;
+  transform: translateY(-50%);
+  backdrop-filter: blur(8px);
+  transition:
+    opacity 0.2s,
+    background 0.2s;
+}
+.project-gallery-nav:hover,
+.project-gallery-nav:focus-visible {
+  background: rgba(3, 4, 18, 0.82);
+  opacity: 1;
+}
+.project-gallery-nav.is-previous {
+  left: 1rem;
+}
+.project-gallery-nav.is-next {
+  right: 1rem;
+}
+.project-gallery-nav svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .project-gallery-main > span {
   position: absolute;
@@ -541,8 +675,10 @@ body {
 .project-thumbnails {
   display: flex;
   gap: 0.5rem;
-  padding-top: 0.65rem;
+  padding: 0.75rem;
   overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 87, 219, 0.7) transparent;
 }
 .project-thumbnails button {
   flex: 0 0 5.5rem;
@@ -565,18 +701,20 @@ body {
 .project-modal-copy {
   display: flex;
   flex-direction: column;
-  padding: 2.5rem;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
 }
 .project-modal-copy h3 {
-  margin-top: 0.5rem;
-  font-size: 2rem;
+  margin-top: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 600;
   line-height: 1.1;
 }
 .project-summary {
+  max-width: 62rem;
   margin-top: 1rem;
   color: #a3a3a3;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 .project-notes,
 .project-stack {
@@ -587,7 +725,7 @@ body {
 .project-notes ul {
   display: grid;
   gap: 0.55rem;
-  margin-top: 0.75rem;
+  margin-top: 0;
   padding-left: 1rem;
   color: #a3a3a3;
   font-size: 0.82rem;
@@ -598,7 +736,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 0.75rem;
+  margin-top: 0;
 }
 .project-stack > div > span {
   display: inline-flex;
@@ -626,15 +764,30 @@ body {
 .project-link {
   display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.65rem 0.85rem;
+  gap: 0.45rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 0.45rem;
-  background: linear-gradient(135deg, #7a57db, #5c33cc);
+  background: rgba(255, 255, 255, 0.035);
+  color: #d8d8df;
   font-size: 0.75rem;
-  transition: transform 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s;
+}
+.project-link svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .project-link:hover {
-  transform: translateY(-2px);
+  border-color: rgba(122, 87, 219, 0.7);
+  background: rgba(122, 87, 219, 0.1);
+  color: white;
 }
 
 .showcase-dialog.certificate-dialog {
@@ -735,13 +888,6 @@ a:focus-visible {
 @media (max-width: 800px) {
   .certificate-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .project-modal-grid {
-    grid-template-columns: 1fr;
-  }
-  .project-gallery {
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   .project-modal-copy {
     padding: 2rem 1.25rem 1.5rem;

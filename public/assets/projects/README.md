@@ -4,6 +4,7 @@ Each project has its own folder:
 
 ```text
 projects/
+├── oterax/
 ├── i18n-mcp/
 ├── tanilytics/
 └── e-sihha/
@@ -22,7 +23,7 @@ Replace `cover.jpg` in the project folder. Keeping the same filename means no co
    public/assets/projects/i18n-mcp/screenshot-2.jpg
    ```
 
-2. Add their public paths to that project's `images` array in `src/constants/index.js`:
+2. Add their public paths to that project's `images` array in `src/constants/index.ts`:
 
    ```js
    images: [

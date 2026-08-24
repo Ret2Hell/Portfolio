@@ -12,7 +12,10 @@ const ExternalLink = ({ href, children }: ExternalLinkProps) => {
   if (!href) return null;
   return (
     <a href={href} target="_blank" rel="noreferrer" className="project-link">
-      {children} <span aria-hidden="true">↗</span>
+      {children}
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+        <path d="M14 5h5v5M19 5l-8 8M19 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
+      </svg>
     </a>
   );
 };
@@ -27,11 +30,39 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
   const [activeImage, setActiveImage] = useState(0);
 
   return (
-    <ShowcaseModal closeModal={closeModal} label={`${project.title} project details`}>
+    <ShowcaseModal
+      closeModal={closeModal}
+      label={`${project.title} project details`}
+      className="project-dialog"
+    >
       <div className="project-modal-grid">
         <div className="project-gallery">
           <div className="project-gallery-main">
             <img src={images[activeImage]} alt={`${project.title} view ${activeImage + 1}`} />
+            {images.length > 1 && (
+              <>
+                <button
+                  className="project-gallery-nav is-previous"
+                  onClick={() =>
+                    setActiveImage((current) => (current - 1 + images.length) % images.length)
+                  }
+                  aria-label="Show previous image"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+                <button
+                  className="project-gallery-nav is-next"
+                  onClick={() => setActiveImage((current) => (current + 1) % images.length)}
+                  aria-label="Show next image"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </>
+            )}
             <span>
               {String(activeImage + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
             </span>
@@ -53,15 +84,11 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
         </div>
 
         <div className="project-modal-copy">
-          <span className="showcase-kicker">
-            {project.date ? `${project.date} · Project` : "Selected project"}
-          </span>
           <h3>{project.title}</h3>
           <p className="project-summary">{project.description}</p>
 
           {project.subDescription?.length > 0 && (
             <div className="project-notes">
-              <span className="showcase-label">What I built</span>
               <ul>
                 {project.subDescription.map((item) => (
                   <li key={item}>{item}</li>
@@ -71,7 +98,6 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
           )}
 
           <div className="project-stack">
-            <span className="showcase-label">Stack used</span>
             <div>
               {project.tags.map((tag) => (
                 <span key={tag.name}>
@@ -84,8 +110,8 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
 
           {(project.repository || project.liveDemo || project.href) && (
             <div className="project-actions">
-              <ExternalLink href={project.liveDemo || project.href}>Live demo</ExternalLink>
-              <ExternalLink href={project.repository}>GitHub repository</ExternalLink>
+              <ExternalLink href={project.liveDemo || project.href}>Visit website</ExternalLink>
+              <ExternalLink href={project.repository}>View source</ExternalLink>
             </div>
           )}
         </div>
