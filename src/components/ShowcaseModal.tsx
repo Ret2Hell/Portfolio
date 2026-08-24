@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "motion/react";
 
 interface ShowcaseModalProps {
@@ -28,7 +29,7 @@ const ShowcaseModal = ({ children, closeModal, label, className = "" }: Showcase
     };
   }, [closeModal]);
 
-  return (
+  return createPortal(
     <motion.div
       className="showcase-backdrop"
       initial={{ opacity: 0 }}
@@ -55,7 +56,8 @@ const ShowcaseModal = ({ children, closeModal, label, className = "" }: Showcase
         </button>
         {children}
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
 

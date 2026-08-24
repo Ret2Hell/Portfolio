@@ -11,18 +11,18 @@ export const Timeline = ({ data }: { data: ExperienceData[] }) => {
         {data.map((item, index) => (
           <article
             key={`${item.company}-${item.date}`}
-            className="group grid gap-7 border-b border-white/10 py-9 md:grid-cols-[18rem_minmax(0,1fr)] md:gap-12 md:py-11 lg:grid-cols-[21rem_minmax(0,1fr)] lg:gap-16"
+            className="experience-item group grid gap-6 border-b border-white/10 py-8 md:grid-cols-[18rem_minmax(0,1fr)] md:gap-12 md:py-11 lg:grid-cols-[21rem_minmax(0,1fr)] lg:gap-16"
           >
-            <header>
-              <div className="mb-5 flex items-center gap-3">
+            <header className="experience-header">
+              <div className="mb-4 flex min-w-0 items-center gap-2.5 md:mb-5 md:gap-3">
                 <span className="font-mono text-xs tracking-[0.2em] text-neutral-600">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="h-px w-8 bg-neutral-800 transition-colors duration-300 group-hover:bg-lavender/60" />
-                <p className="text-sm text-neutral-500">{item.date}</p>
+                <p className="min-w-0 text-sm text-neutral-500">{item.date}</p>
               </div>
 
-              <h3 className="text-2xl font-semibold leading-tight text-white md:text-3xl">
+              <h3 className="text-[1.65rem] font-semibold leading-tight text-white md:text-3xl">
                 {item.title}
               </h3>
 
@@ -48,11 +48,16 @@ export const Timeline = ({ data }: { data: ExperienceData[] }) => {
               </div>
             </header>
 
-            <ul className="space-y-4 md:border-l md:border-white/8 md:pl-10 lg:pl-12">
+            <ul className="experience-details space-y-3.5 md:border-l md:border-white/8 md:pl-10 lg:pl-12">
               {item.contents.map((content) => (
-                <li key={content} className="grid grid-cols-[0.35rem_1fr] gap-4 text-neutral-400">
-                  <span className="mt-[0.7rem] h-1.5 w-1.5 rounded-full bg-lavender/70" />
-                  <span className="leading-7">{content}</span>
+                <li
+                  key={content}
+                  className="grid min-w-0 grid-cols-[0.3rem_minmax(0,1fr)] gap-3 text-neutral-400 md:gap-4"
+                >
+                  <span className="mt-[0.6rem] h-1.5 w-1.5 rounded-full bg-lavender/70" />
+                  <span className="text-[0.95rem] leading-6 [overflow-wrap:anywhere] md:text-base md:leading-7">
+                    {content}
+                  </span>
                 </li>
               ))}
             </ul>

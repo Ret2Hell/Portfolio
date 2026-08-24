@@ -8,7 +8,7 @@ const HeroText = () => {
     visible: { opacity: 1, x: 0 },
   };
   return (
-    <div className="z-10 mt-20 text-center md:mt-40 md:text-left rounded-3xl bg-clip-text">
+    <div className="hero-copy z-10 mt-24 w-full min-w-0 text-center md:mt-40 md:text-left rounded-3xl bg-clip-text">
       {/* Desktop View */}
       <div className="flex-col hidden md:flex c-space">
         <motion.h1
@@ -50,9 +50,9 @@ const HeroText = () => {
         </div>
       </div>
       {/* Mobile View */}
-      <div className="flex- flex-col space-y-6 md:hidden">
+      <div className="hero-copy-mobile mx-auto flex max-w-lg flex-col gap-7 md:hidden">
         <motion.p
-          className="text-4xl font-medium"
+          className="hero-intro font-medium leading-tight"
           variants={variants}
           initial="hidden"
           animate="visible"
@@ -60,9 +60,9 @@ const HeroText = () => {
         >
           Hi, I'm Yassine
         </motion.p>
-        <div>
+        <div className="min-w-0">
           <motion.p
-            className="text-5xl font-black text-neutral-300"
+            className="hero-role font-black leading-[0.98] text-neutral-300"
             variants={variants}
             initial="hidden"
             animate="visible"
@@ -71,15 +71,19 @@ const HeroText = () => {
             Software Engineer
           </motion.p>
           <motion.div
+            className="min-w-0"
             variants={variants}
             initial="hidden"
             animate="visible"
             transition={{ delay: 1.5 }}
           >
-            <FlipWords words={words} className="font-bold text-white text-7xl" />
+            <FlipWords
+              words={words}
+              className="hero-flip mt-3 max-w-full font-bold leading-[0.95] text-white"
+            />
           </motion.div>
           <motion.p
-            className="text-4xl font-black text-neutral300"
+            className="hero-systems mt-3 font-black leading-none text-neutral-300"
             variants={variants}
             initial="hidden"
             animate="visible"

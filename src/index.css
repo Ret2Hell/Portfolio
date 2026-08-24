@@ -138,6 +138,85 @@ section[id],
     padding-block: 0.6rem;
   }
 }
+/* Mobile layout */
+@media (max-width: 767px) {
+  .hero-copy {
+    box-sizing: border-box;
+    padding-inline: 0;
+  }
+  .hero-copy-mobile {
+    width: 100%;
+    max-width: 34rem;
+  }
+  .hero-intro {
+    font-size: clamp(1.8rem, 8.5vw, 2.6rem);
+  }
+  .hero-role {
+    font-size: clamp(2.15rem, 10.5vw, 3.35rem);
+  }
+  .hero-flip {
+    /* Sized against the viewport so the longest word, AI-Powered, always fits. */
+    font-size: clamp(2.4rem, 11vw, 4rem);
+    white-space: nowrap;
+  }
+  .hero-systems {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .experience-item {
+    margin-inline: -0.35rem;
+    padding: 1.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.85rem;
+    background: rgba(255, 255, 255, 0.018);
+  }
+  .experience-item + .experience-item {
+    margin-top: 1rem;
+  }
+  .experience-details {
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .site-footer {
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
+  }
+  .site-footer > div:first-child {
+    margin-bottom: 0.25rem;
+  }
+  .site-footer > a {
+    width: 100%;
+    color: #b7b7c0;
+    font-size: clamp(0.72rem, 3.3vw, 0.875rem);
+    overflow-wrap: anywhere;
+  }
+  .footer-socials {
+    width: 100%;
+    justify-content: center;
+  }
+  .footer-social {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.025);
+  }
+  .footer-copyright {
+    margin-top: 0.25rem;
+    color: #696b78;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-flip {
+    font-size: 10.5vw;
+  }
+}
+
 /* Button Components */
 .btn {
   @apply relative px-1 py-4 text-sm text-center rounded-full font-extralight bg-primary w-[12rem] cursor-pointer overflow-hidden;
@@ -564,7 +643,8 @@ section[id],
 .showcase-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 1000;
+  isolation: isolate;
   display: grid;
   place-items: center;
   padding: 1.25rem;
@@ -961,6 +1041,69 @@ a:focus-visible {
   }
   .showcase-dialog {
     max-height: calc(100vh - 1rem);
+  }
+
+  /* Preserve the modal's design while constraining it to a mobile viewport. */
+  .showcase-dialog.project-dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 1rem);
+    overflow-x: hidden;
+  }
+  .project-modal-grid,
+  .project-gallery,
+  .project-modal-copy {
+    min-width: 0;
+  }
+  .project-gallery-main > img {
+    max-height: 44dvh;
+    object-fit: contain;
+  }
+  .project-dialog .showcase-close {
+    top: 0.65rem;
+    right: 0.65rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: rgba(3, 4, 18, 0.82);
+    opacity: 1;
+  }
+  .project-gallery-nav {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .project-gallery-nav.is-previous {
+    left: 0.6rem;
+  }
+  .project-gallery-nav.is-next {
+    right: 0.6rem;
+  }
+  .project-thumbnails {
+    padding: 0.6rem;
+  }
+  .project-thumbnails button {
+    flex-basis: 4.5rem;
+  }
+  .project-modal-copy {
+    padding: 1.5rem 1.1rem;
+  }
+  .project-modal-copy h3 {
+    padding-right: 2rem;
+    overflow-wrap: anywhere;
+    font-size: clamp(1.7rem, 9vw, 2.25rem);
+  }
+  .project-summary {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .project-stack > div > span {
+    max-width: 100%;
+  }
+  .project-actions {
+    width: 100%;
+  }
+  .project-link {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 }
 @media (prefers-reduced-motion: reduce) {
