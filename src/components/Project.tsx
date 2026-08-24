@@ -30,7 +30,7 @@ const Project = ({ project, onOpen }: ProjectProps) => {
     <article className="project-card">
       <button className="project-card-open" onClick={onOpen} aria-label={`View ${title} details`}>
         <div className="project-cover">
-          <img src={image} alt={`${title} preview`} loading="lazy" />
+          <img src={image} alt={`${title} preview`} loading="lazy" decoding="async" />
         </div>
       </button>
 

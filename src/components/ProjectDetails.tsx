@@ -38,7 +38,11 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
       <div className="project-modal-grid">
         <div className="project-gallery">
           <div className="project-gallery-main">
-            <img src={images[activeImage]} alt={`${project.title} view ${activeImage + 1}`} />
+            <img
+              src={images[activeImage]}
+              alt={`${project.title} view ${activeImage + 1}`}
+              decoding="async"
+            />
             {images.length > 1 && (
               <>
                 <button
@@ -76,7 +80,7 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
                   onClick={() => setActiveImage(index)}
                   aria-label={`Show image ${index + 1}`}
                 >
-                  <img src={image} alt="" />
+                  <img src={image} alt="" loading="lazy" decoding="async" />
                 </button>
               ))}
             </div>
