@@ -1,9 +1,0 @@
-pre-commit:
-  parallel: true
-  commands:
-    oxlint:
-      glob: "*.{ts,tsx,js,jsx}"
-      run: "mise exec -- oxlint {staged_files}"
-    oxfmt:
-      glob: "*.{ts,tsx,js,jsx,json,css,md,yml,yaml,toml}"
-      run: "mise exec -- oxfmt --check {staged_files}"

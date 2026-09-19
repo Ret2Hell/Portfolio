@@ -7,7 +7,7 @@ A responsive developer portfolio built with React, TypeScript, Vite, Tailwind CS
 This repository uses [mise](https://mise.jdx.dev/) to pin the project tools:
 
 - Bun
-- Lefthook
+- hk
 - Oxfmt
 - Oxlint
 
@@ -29,18 +29,19 @@ mise run dev
 
 ## Commands
 
-| Command              | Alias    | Description                             |
-| -------------------- | -------- | --------------------------------------- |
-| `mise run install`   | `mise i` | Install dependencies with Bun           |
-| `mise run dev`       | `mise d` | Start the Vite dev server (Bun runtime) |
-| `mise run build`     | `mise b` | Build the production application (Bun)  |
-| `mise run start`     | `mise s` | Preview the production build (Bun)      |
-| `mise run lint`      | `mise l` | Lint with Oxlint                        |
-| `mise run format`    | `mise f` | Format with Oxfmt                       |
-| `mise run typecheck` | `mise t` | Type check with TypeScript 7 (`tsc`)    |
-| `mise run check`     | `mise c` | Run lint, typecheck, and build          |
+| Command              | Alias       | Description                             |
+| -------------------- | ----------- | --------------------------------------- |
+| `mise run install`   | `mise i`    | Install dependencies with Bun           |
+| `mise run hooks`     | `mise hook` | Install hk Git hooks                    |
+| `mise run dev`       | `mise d`    | Start the Vite dev server (Bun runtime) |
+| `mise run build`     | `mise b`    | Build the production application (Bun)  |
+| `mise run start`     | `mise s`    | Preview the production build (Bun)      |
+| `mise run lint`      | `mise l`    | Lint with Oxlint                        |
+| `mise run format`    | `mise f`    | Format with Oxfmt                       |
+| `mise run typecheck` | `mise t`    | Type check with TypeScript 7 (`tsc`)    |
+| `mise run check`     | `mise c`    | Run lint, typecheck, and build          |
 
-Lefthook runs Oxlint and an Oxfmt check against staged files before each commit.
+hk runs Oxlint and an Oxfmt check against staged files before each commit.
 
 ## Project structure
 

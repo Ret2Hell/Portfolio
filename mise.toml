@@ -1,16 +1,22 @@
 [tools]
 bun = "latest"
-lefthook = "latest"
+hk = "latest"
 oxfmt = "latest"
 oxlint = "latest"
 
 [settings]
 jobs = 4
+lockfile = true
 
 [tasks.install]
 description = "Install dependencies with Bun"
 run = "bun install --frozen-lockfile"
 alias = ["i"]
+
+[tasks.hooks]
+description = "Install hk Git hooks"
+run = "hk install --mise"
+alias = ["hook"]
 
 [tasks.dev]
 description = "Start the Vite development server (Bun runtime)"
