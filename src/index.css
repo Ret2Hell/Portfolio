@@ -715,7 +715,8 @@ section[id],
   overflow: hidden;
   background: #030412;
 }
-.project-gallery-main > img {
+.project-gallery-main > img,
+.project-gallery-main > video {
   display: block;
   width: 100%;
   height: auto;
@@ -790,7 +791,8 @@ section[id],
   border-color: #7a57db;
   opacity: 1;
 }
-.project-thumbnails img {
+.project-thumbnails img,
+.project-thumbnails video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1055,7 +1057,8 @@ a:focus-visible {
   .project-modal-copy {
     min-width: 0;
   }
-  .project-gallery-main > img {
+  .project-gallery-main > img,
+  .project-gallery-main > video {
     max-height: 44dvh;
     object-fit: contain;
   }

@@ -28,7 +28,12 @@ interface ProjectDetailsProps {
 
 const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
   const images = project.images?.length ? project.images : [project.image];
-  const [activeImage, setActiveImage] = useState(0);
+  const media = [
+    ...(project.video ? [{ type: "video" as const, src: project.video }] : []),
+    ...images.map((src) => ({ type: "image" as const, src })),
+  ];
+  const [activeMedia, setActiveMedia] = useState(0);
+  const currentMedia = media[activeMedia];
 
   return (
     <ShowcaseModal
@@ -39,21 +44,25 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
       <div className="project-modal-grid">
         <div className="project-gallery">
           <div className="project-gallery-main">
-            <img
-              src={images[activeImage]}
-              {...responsiveImage(images[activeImage])}
-              sizes="(min-width: 1024px) 60vw, 94vw"
-              alt={`${project.title} view ${activeImage + 1}`}
-              decoding="async"
-            />
-            {images.length > 1 && (
+            {currentMedia.type === "video" ? (
+              <video src={currentMedia.src} controls playsInline preload="metadata" />
+            ) : (
+              <img
+                src={currentMedia.src}
+                {...responsiveImage(currentMedia.src)}
+                sizes="(min-width: 1024px) 60vw, 94vw"
+                alt={`${project.title} view ${activeMedia + 1}`}
+                decoding="async"
+              />
+            )}
+            {media.length > 1 && (
               <>
                 <button
                   className="project-gallery-nav is-previous"
                   onClick={() =>
-                    setActiveImage((current) => (current - 1 + images.length) % images.length)
+                    setActiveMedia((current) => (current - 1 + media.length) % media.length)
                   }
-                  aria-label="Show previous image"
+                  aria-label="Show previous media"
                 >
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
                     <path d="m15 18-6-6 6-6" />
@@ -61,8 +70,8 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
                 </button>
                 <button
                   className="project-gallery-nav is-next"
-                  onClick={() => setActiveImage((current) => (current + 1) % images.length)}
-                  aria-label="Show next image"
+                  onClick={() => setActiveMedia((current) => (current + 1) % media.length)}
+                  aria-label="Show next media"
                 >
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
                     <path d="m9 18 6-6-6-6" />
@@ -71,26 +80,30 @@ const ProjectDetails = ({ project, closeModal }: ProjectDetailsProps) => {
               </>
             )}
             <span>
-              {String(activeImage + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
+              {String(activeMedia + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}
             </span>
           </div>
-          {images.length > 1 && (
-            <div className="project-thumbnails" aria-label="Project images">
-              {images.map((image, index) => (
+          {media.length > 1 && (
+            <div className="project-thumbnails" aria-label="Project media">
+              {media.map((item, index) => (
                 <button
-                  key={`${image}-${index}`}
-                  className={index === activeImage ? "is-active" : ""}
-                  onClick={() => setActiveImage(index)}
-                  aria-label={`Show image ${index + 1}`}
+                  key={`${item.src}-${index}`}
+                  className={index === activeMedia ? "is-active" : ""}
+                  onClick={() => setActiveMedia(index)}
+                  aria-label={`Show ${item.type} ${index + 1}`}
                 >
-                  <img
-                    src={image}
-                    {...responsiveImage(image)}
-                    sizes="96px"
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  {item.type === "video" ? (
+                    <video src={item.src} muted preload="metadata" />
+                  ) : (
+                    <img
+                      src={item.src}
+                      {...responsiveImage(item.src)}
+                      sizes="96px"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
                 </button>
               ))}
             </div>

@@ -26,6 +26,7 @@ export interface ProjectData {
   href?: string;
   cardLink?: "website" | "repository";
   image: string;
+  video?: string;
   images?: string[];
   tags: TechnologyTag[];
 }
@@ -158,6 +159,7 @@ export const myProjects: ProjectData[] = [
     ],
     liveDemo: "https://www.raiselabs.ai/en/teachinghero",
     image: "/assets/projects/teachinghero/1.webp",
+    video: "https://pub-91babb39e96b4515b0a9dfa38a0e3b41.r2.dev/tutorials/th_creator.mp4",
     images: [
       "/assets/projects/teachinghero/1.webp",
       "/assets/projects/teachinghero/2.webp",
@@ -175,6 +177,9 @@ export const myProjects: ProjectData[] = [
       "/assets/projects/teachinghero/14.webp",
       "/assets/projects/teachinghero/15.webp",
       "/assets/projects/teachinghero/16.webp",
+      "/assets/projects/teachinghero/17.webp",
+      "/assets/projects/teachinghero/18.webp",
+      "/assets/projects/teachinghero/19.webp",
     ],
     tags: [
       { id: 1, name: "Next.js", path: "/assets/logos/nextjs.svg" },
