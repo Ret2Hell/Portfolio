@@ -4,7 +4,7 @@ Each project has its own folder:
 
 ```text
 projects/
-├── oterax/
+├── teachinghero/
 ├── i18n-mcp/
 ├── jiratui/
 ├── tanilytics/
