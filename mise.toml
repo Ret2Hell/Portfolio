@@ -30,6 +30,7 @@ alias = ["b"]
 
 [tasks.start]
 description = "Preview the production Vite build (Bun runtime)"
+depends = ["build"]
 run = "bunx vite preview"
 alias = ["s"]
 
