@@ -1,6 +1,7 @@
 [tools]
 bun = "latest"
 hk = "latest"
+gitleaks = "latest"
 oxfmt = "latest"
 oxlint = "latest"
 
@@ -50,6 +51,6 @@ run = "bunx tsc --noEmit"
 alias = ["t", "tc"]
 
 [tasks.check]
-description = "Run all validation checks"
-depends = ["lint", "typecheck", "build"]
+description = "Check modified files without modifying them"
+run = "hk check --check"
 alias = ["c"]

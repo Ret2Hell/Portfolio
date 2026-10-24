@@ -1,19 +1,36 @@
-amends "package://github.com/jdx/hk/releases/download/v2.5.0/hk@2.5.0#/Config.pkl"
+amends "package://github.com/jdx/hk/releases/download/v2.8.1/hk@2.8.1#/Config.pkl"
+
+import "package://github.com/jdx/hk/releases/download/v2.8.1/hk@2.8.1#/Builtins.pkl"
 
 exclude = List(".mise/locks")
 
 local checks = new Mapping<String, Step> {
-  ["oxlint"] {
-    glob = List("**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx")
-    check = "oxlint {{files}}"
+  ["lint"] = Builtins.ox_lint
+  ["format"] = (Builtins.oxfmt) {
+    depends = "lint"
   }
-  ["oxfmt"] {
-    glob = List(
-      "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json",
-      "**/*.css", "**/*.md", "**/*.yml", "**/*.yaml", "**/*.toml"
-    )
-    check = "oxfmt --check {{files}}"
-  }
+  ["merge-conflict"] = Builtins.check_merge_conflict
+  ["private-key"] = Builtins.detect_private_key
 }
 
 steps = checks
+
+hooks {
+  ["commit-msg"] {
+    steps {
+      ["conventional-commit"] = Builtins.check_conventional_commit
+    }
+  }
+  ["pre-commit"] {
+    steps {
+      ["gitleaks"] = (Builtins.gitleaks) {
+        scan = "staged"
+      }
+    }
+  }
+  ["pre-push"] {
+    steps {
+      ["typecheck"] { check = "mise run typecheck" }
+    }
+  }
+}
