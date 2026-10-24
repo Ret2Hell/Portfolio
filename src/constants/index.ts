@@ -358,7 +358,7 @@ export const myProjects: ProjectData[] = [
 export const mySocials: SocialData[] = [
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/mohamed-yassine-taieb-2016552a0/",
+    href: "https://www.linkedin.com/in/mohamed-yassine-taieb/",
     icon: "/assets/socials/linkedIn.svg",
   },
   {
